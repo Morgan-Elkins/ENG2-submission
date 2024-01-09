@@ -8,8 +8,15 @@ import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
 import picocli.CommandLine.Parameters;
 
-@Command(name = "video-cli", description = "...", subcommands = {
-		GetVideosCommand.class, AddVideoCommand.class }, mixinStandardHelpOptions = true)
+@Command(name = "video-cli", description = "...", 
+subcommands = {
+		GetVideosCommand.class, 
+		AddVideoCommand.class, 
+		GetVideoCommand.class,
+		UpdateVideoCommand.class,
+		AddUserCommand.class,
+		GetUsersCommand.class}, 
+mixinStandardHelpOptions = true)
 public class VideoCliCommand implements Runnable {
 
 	@Option(names = { "-v", "--verbose" }, description = "...")

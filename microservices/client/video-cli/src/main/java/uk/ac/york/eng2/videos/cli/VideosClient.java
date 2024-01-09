@@ -4,6 +4,7 @@ import io.micronaut.http.HttpResponse;
 import io.micronaut.http.annotation.Body;
 import io.micronaut.http.annotation.Get;
 import io.micronaut.http.annotation.Post;
+import io.micronaut.http.annotation.Put;
 import io.micronaut.http.client.annotation.Client;
 import uk.ac.york.eng2.videos.domain.Video;
 import uk.ac.york.eng2.videos.dto.VideoDTO;
@@ -17,4 +18,10 @@ public interface VideosClient {
 	@Post("/")
 	public HttpResponse<Void> add(@Body VideoDTO videoDetails);
 	
+	@Get("/{id}")
+	public Video getVideo(long id);
+	
+	@Put("/{id}")
+	public HttpResponse<Void> updateVideo(long id, @Body VideoDTO videoDetails);
+
 }
