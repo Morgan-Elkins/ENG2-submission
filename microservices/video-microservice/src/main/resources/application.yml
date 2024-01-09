@@ -1,0 +1,28 @@
+micronaut:
+  application:
+    name: videoMicroservice
+datasources:
+  default:
+    url: jdbc:mariadb://localhost:3306/videos
+    username: todo
+    password: todosecret
+    driver-class-name: org.mariadb.jdbc.Driver
+    db-type: mariadb
+    dialect: MYSQL
+jpa:
+  default:
+    entity-scan:
+      packages:
+        - uk.ac.york.eng2.videos.domain
+    properties:
+      hibernate:
+        show_sql: true
+        format_sql: true
+        hbm2ddl:
+          auto: update
+kafka:
+  enabled: false
+netty:
+  default:
+    allocator:
+      max-order: 3
