@@ -1,0 +1,5 @@
+# This Compose file should be able to bring up all your microservices
+# and anything else they need (e.g. MariaDB and Kafka).
+#
+# The Compose file can assume that the appropriate commands have already
+# been run to build the Docker images of the various microservices.

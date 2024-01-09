@@ -1,0 +1,5 @@
+/*
+ * If your entrypoint is EGX, you would include here the rules to run your various EGL scripts.
+ *
+ * Another option is to use directly an EGL file (which would be called Y1234.egl).
+ */
