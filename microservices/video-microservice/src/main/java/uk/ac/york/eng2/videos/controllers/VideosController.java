@@ -12,8 +12,10 @@ import io.micronaut.http.annotation.Get;
 import io.micronaut.http.annotation.Post;
 import io.micronaut.http.annotation.Put;
 import jakarta.inject.Inject;
+import uk.ac.york.eng2.videos.domain.User;
 import uk.ac.york.eng2.videos.domain.Video;
 import uk.ac.york.eng2.videos.dto.VideoDTO;
+import uk.ac.york.eng2.videos.repositories.UsersRepository;
 import uk.ac.york.eng2.videos.repositories.VideosRepository;
 
 @Controller("/videos")
@@ -21,6 +23,9 @@ public class VideosController {
 
 	@Inject
 	VideosRepository repo;
+	
+	@Inject
+	UsersRepository userRepo;
 
 	@Get("/")
 	public Iterable<Video> list() {
@@ -72,5 +77,58 @@ public class VideosController {
 		repo.update(v);
 		
 		return HttpResponse.ok();
+	}
+	
+	@Transactional
+	@Put("/{id}")
+	public HttpResponse<Void> deleteVideo(long id)
+	{
+		boolean exists = repo.existsById(id);
+		if (!exists) 
+		{
+			return HttpResponse.notFound();
+		}
+		
+		repo.deleteById(id);
+		return HttpResponse.ok();
+	}
+	
+	@Get("/{id}/viewers")
+	public Iterable<User> getViewers(long id)
+	{
+		Optional<Video> optVideo =  repo.findById(id);
+	
+		if (optVideo.isEmpty()) 
+		{
+			return null;
+		}
+		return optVideo.get().getViewers();
+	}
+	
+	@Transactional
+	@Put("/{videoId}/viewers/{userId}")
+	public HttpResponse<Void> addViewer(long videoId, long userId)
+	{
+		Optional<Video> oVideo = repo.findById(videoId);
+		
+		if (oVideo.isEmpty()) 
+		{
+			return HttpResponse.notFound();
+		}
+		
+		Optional<User> oUser = userRepo.findById(userId);
+		
+		if (oUser.isEmpty()) 
+		{
+			return HttpResponse.notFound();
+		}
+		
+		Video video = oVideo.get();
+		User user = oUser.get();
+		video.getViewers().add(user);
+		repo.update(video);
+		
+		return HttpResponse.ok();
+
 	}
 }

@@ -14,8 +14,11 @@ subcommands = {
 		AddVideoCommand.class, 
 		GetVideoCommand.class,
 		UpdateVideoCommand.class,
+		DeleteVideoCommand.class,
 		AddUserCommand.class,
-		GetUsersCommand.class}, 
+		GetUsersCommand.class,
+		GetViewersCommand.class,
+		AddViewerCommand.class}, 
 mixinStandardHelpOptions = true)
 public class VideoCliCommand implements Runnable {
 

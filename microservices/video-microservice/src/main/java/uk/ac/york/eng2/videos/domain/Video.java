@@ -1,9 +1,12 @@
 package uk.ac.york.eng2.videos.domain;
 
+import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 
 import io.micronaut.serde.annotation.Serdeable;
 
@@ -20,6 +23,9 @@ public class Video {
 	private String title;
 	@Column(nullable = false)
 	private String hashtags;
+	
+	@ManyToMany
+	private Set<User> viewers;
 
 	public Long getId() {
 		return id;
@@ -52,4 +58,14 @@ public class Video {
 	public void setHashtags(String hashtags) {
 		this.hashtags = hashtags;
 	}
+
+	public Set<User> getViewers() {
+		return viewers;
+	}
+
+	public void setViewers(Set<User> viewers) {
+		this.viewers = viewers;
+	}
+	
+	
 }
