@@ -2,6 +2,7 @@ package uk.ac.york.eng2.videos.cli;
 
 import io.micronaut.http.HttpResponse;
 import io.micronaut.http.annotation.Body;
+import io.micronaut.http.annotation.Delete;
 import io.micronaut.http.annotation.Get;
 import io.micronaut.http.annotation.Post;
 import io.micronaut.http.annotation.Put;
@@ -25,7 +26,7 @@ public interface VideosClient {
 	@Put("/{id}")
 	public HttpResponse<Void> updateVideo(long id, @Body VideoDTO videoDetails);
 
-	@Put("/{id}")
+	@Delete("/{id}")
 	public HttpResponse<Void> deleteVideo(long id);
 
 	@Get("/{id}/viewers")

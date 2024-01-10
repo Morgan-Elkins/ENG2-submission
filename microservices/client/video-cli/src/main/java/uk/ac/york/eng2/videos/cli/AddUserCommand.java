@@ -11,7 +11,7 @@ import uk.ac.york.eng2.videos.dto.VideoDTO;
 public class AddUserCommand implements Runnable {
 
 	@Inject
-	UsersClient client;
+	private UsersClient client;
 	
 	@Parameters(index="0")
 	private String username;

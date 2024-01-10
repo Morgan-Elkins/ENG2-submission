@@ -4,8 +4,6 @@ import io.micronaut.http.HttpResponse;
 import jakarta.inject.Inject;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Parameters;
-import uk.ac.york.eng2.videos.domain.Video;
-import uk.ac.york.eng2.videos.dto.VideoDTO;
 
 @Command(name = "add-viewer", description = "Adds a viewer to a video", mixinStandardHelpOptions = true)
 public class AddViewerCommand implements Runnable {

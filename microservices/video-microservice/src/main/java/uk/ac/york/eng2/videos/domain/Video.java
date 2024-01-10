@@ -8,6 +8,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import io.micronaut.serde.annotation.Serdeable;
 
 @Entity
@@ -24,6 +26,7 @@ public class Video {
 	@Column(nullable = false)
 	private String hashtags;
 	
+	@JsonIgnore
 	@ManyToMany
 	private Set<User> viewers;
 
