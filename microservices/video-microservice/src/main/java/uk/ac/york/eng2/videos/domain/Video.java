@@ -29,6 +29,14 @@ public class Video {
 	@JsonIgnore
 	@ManyToMany
 	private Set<User> viewers;
+	
+//	@JsonIgnore
+//	@ManyToMany
+//	private Set<User> likes;
+//	
+//	@JsonIgnore
+//	@ManyToMany
+//	private Set<User> dislikes;
 
 	public Long getId() {
 		return id;
@@ -69,6 +77,4 @@ public class Video {
 	public void setViewers(Set<User> viewers) {
 		this.viewers = viewers;
 	}
-	
-	
 }

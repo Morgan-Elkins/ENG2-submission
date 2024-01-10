@@ -5,8 +5,8 @@ import jakarta.inject.Inject;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Parameters;
 
-@Command(name = "add-viewer", description = "Adds a viewer to a video", mixinStandardHelpOptions = true)
-public class AddViewerCommand implements Runnable {
+@Command(name = "delete-viewer", description = "Deletes a viewer from a video", mixinStandardHelpOptions = true)
+public class DeleteViewerCommand implements Runnable {
 
 	@Inject
 	VideosClient client;
@@ -20,7 +20,7 @@ public class AddViewerCommand implements Runnable {
 
 	@Override
 	public void run() {
-		HttpResponse<Void> response = client.addViewer(videoId, userId);
+		HttpResponse<Void> response = client.deleteViewer(videoId, userId);
 		System.out.println("Server responded with: " + response.getStatus());
 		
 	}

@@ -34,4 +34,7 @@ public interface VideosClient {
 
 	@Put("/{videoId}/viewers/{userId}")
 	public HttpResponse<Void> addViewer(long videoId, long userId);
+	
+	@Delete("/{videoId}/viewers/{userId}")
+	public HttpResponse<Void> deleteViewer(long videoId, long userId);
 }

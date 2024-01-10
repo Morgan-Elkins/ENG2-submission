@@ -27,6 +27,14 @@ public class User {
 	@ManyToMany(mappedBy="viewers")
 	private Set<Video> watchedVideos;
 	
+//	@JsonIgnore
+//	@ManyToMany(mappedBy="likes")
+//	private Set<User> liked;
+//	
+//	@JsonIgnore
+//	@ManyToMany(mappedBy="dislikes")
+//	private Set<User> disliked;
+
 	public long getId() {
 		return id;
 	}

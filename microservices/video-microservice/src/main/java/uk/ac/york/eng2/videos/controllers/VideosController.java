@@ -106,6 +106,30 @@ public class VideosController {
 		return optVideo.get().getViewers();
 	}
 	
+//	@Get("/{id}/likes")
+//	public Iterable<User> getLikes(long id)
+//	{
+//		Optional<Video> optVideo =  repo.findById(id);
+//	
+//		if (optVideo.isEmpty()) 
+//		{
+//			return null;
+//		}
+//		return optVideo.get().getLikes();
+//	}
+//	
+//	@Get("/{id}/dislikes")
+//	public Iterable<User> getDislikes(long id)
+//	{
+//		Optional<Video> optVideo =  repo.findById(id);
+//	
+//		if (optVideo.isEmpty()) 
+//		{
+//			return null;
+//		}
+//		return optVideo.get().getDislikes();
+//	}
+	
 	@Transactional
 	@Put("/{videoId}/viewers/{userId}")
 	public HttpResponse<Void> addViewer(long videoId, long userId)
@@ -130,6 +154,22 @@ public class VideosController {
 		repo.update(video);
 		
 		return HttpResponse.ok();
+	}
+	
+	@Transactional
+	@Delete("/{videoId}/viewers/{userId}")
+	public HttpResponse<Void> deleteViewer(long videoId, long userId)
+	{
+		Optional<Video> oVideo = repo.findById(videoId);
+		if (oVideo.isEmpty()) 
+		{
+			return HttpResponse.notFound();
+		}
 
+		Video video = oVideo.get();
+		video.getViewers().removeIf(t -> t.getId() == userId);
+		repo.update(video);
+		
+		return HttpResponse.ok(); 
 	}
 }
