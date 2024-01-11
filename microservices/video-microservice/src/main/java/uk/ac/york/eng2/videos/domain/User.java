@@ -16,24 +16,24 @@ import io.micronaut.serde.annotation.Serdeable;
 @Serdeable
 public class User {
 
-	@GeneratedValue
 	@Id
+	@GeneratedValue
 	private long id;
 	
 	@Column(nullable=false, unique= true)
 	private String username;
-
+	
 	@JsonIgnore
 	@ManyToMany(mappedBy="viewers")
 	private Set<Video> watchedVideos;
 	
-//	@JsonIgnore
-//	@ManyToMany(mappedBy="likes")
-//	private Set<User> liked;
-//	
-//	@JsonIgnore
-//	@ManyToMany(mappedBy="dislikes")
-//	private Set<User> disliked;
+	@JsonIgnore
+	@ManyToMany(mappedBy="likes")
+	private Set<Video> likedVideos;
+	
+	@JsonIgnore
+	@ManyToMany(mappedBy="dislikes")
+	private Set<Video> dislikedVideos;
 
 	public long getId() {
 		return id;
@@ -57,6 +57,22 @@ public class User {
 
 	public void setWatchedVideos(Set<Video> watchedVideos) {
 		this.watchedVideos = watchedVideos;
+	}
+
+	public Set<Video> getLikedVideos() {
+		return likedVideos;
+	}
+
+	public void setLikedVideos(Set<Video> likedVideos) {
+		this.likedVideos = likedVideos;
+	}
+
+	public Set<Video> getDislikedVideos() {
+		return dislikedVideos;
+	}
+
+	public void setDislikedVideos(Set<Video> dislikedVideos) {
+		this.dislikedVideos = dislikedVideos;
 	}
 	
 }

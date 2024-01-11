@@ -8,7 +8,7 @@ import uk.ac.york.eng2.videos.domain.Video;
 public class GetVideosCommand implements Runnable {
 
 	@Inject
-	VideosClient client;
+	private VideosClient client;
 
 	@Override
 	public void run() {

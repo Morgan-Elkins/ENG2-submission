@@ -6,6 +6,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -15,8 +16,9 @@ import io.micronaut.serde.annotation.Serdeable;
 @Entity
 @Serdeable
 public class Video {
-	@GeneratedValue
+	
 	@Id
+	@GeneratedValue
 	private Long id;
 
 	@Column(nullable = false)
@@ -30,13 +32,15 @@ public class Video {
 	@ManyToMany
 	private Set<User> viewers;
 	
-//	@JsonIgnore
-//	@ManyToMany
-//	private Set<User> likes;
-//	
-//	@JsonIgnore
-//	@ManyToMany
-//	private Set<User> dislikes;
+	@JsonIgnore
+	@JoinTable(name = "likedVideos")
+	@ManyToMany
+	private Set<User> likes;
+	
+	@JsonIgnore
+	@JoinTable(name = "dislikedVideos")
+	@ManyToMany
+	private Set<User> dislikes;
 
 	public Long getId() {
 		return id;
@@ -77,4 +81,22 @@ public class Video {
 	public void setViewers(Set<User> viewers) {
 		this.viewers = viewers;
 	}
+
+	public Set<User> getLikes() {
+		return likes;
+	}
+
+	public void setLikes(Set<User> likes) {
+		this.likes = likes;
+	}
+
+	public Set<User> getDislikes() {
+		return dislikes;
+	}
+
+	public void setDislikes(Set<User> dislikes) {
+		this.dislikes = dislikes;
+	}
+	
+	
 }

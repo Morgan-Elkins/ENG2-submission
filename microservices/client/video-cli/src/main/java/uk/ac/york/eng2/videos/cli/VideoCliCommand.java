@@ -1,12 +1,8 @@
 package uk.ac.york.eng2.videos.cli;
 
 import io.micronaut.configuration.picocli.PicocliRunner;
-import io.micronaut.context.ApplicationContext;
-
-import picocli.CommandLine;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
-import picocli.CommandLine.Parameters;
 
 @Command(name = "video-cli", description = "...", 
 subcommands = {
@@ -19,8 +15,12 @@ subcommands = {
 		GetUsersCommand.class,
 		GetViewersCommand.class,
 		AddViewerCommand.class,
-		DeleteViewerCommand.class}, 
-mixinStandardHelpOptions = true)
+		DeleteViewerCommand.class,
+		GetDislikedVideosCommand.class,
+		GetLikedVideosCommand.class,
+		AddLikeCommand.class,
+		AddDislikeCommand.class}, 
+mixinStandardHelpOptions = true) 
 public class VideoCliCommand implements Runnable {
 
 	@Option(names = { "-v", "--verbose" }, description = "...")

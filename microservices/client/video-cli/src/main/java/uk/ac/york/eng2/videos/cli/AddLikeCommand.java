@@ -5,8 +5,8 @@ import jakarta.inject.Inject;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Parameters;
 
-@Command(name = "add-viewer", description = "Adds a viewer to a video", mixinStandardHelpOptions = true)
-public class AddViewerCommand implements Runnable {
+@Command(name = "add-like", description = "Adds a like to a video", mixinStandardHelpOptions = true)
+public class AddLikeCommand implements Runnable {
 
 	@Inject
 	private VideosClient client;
@@ -20,7 +20,7 @@ public class AddViewerCommand implements Runnable {
 
 	@Override
 	public void run() {
-		HttpResponse<Void> response = client.addViewer(videoId, userId);
+		HttpResponse<Void> response = client.addLike(videoId, userId);
 		System.out.println("Server responded with: " + response.getStatus());
 		
 	}

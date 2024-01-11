@@ -106,29 +106,29 @@ public class VideosController {
 		return optVideo.get().getViewers();
 	}
 	
-//	@Get("/{id}/likes")
-//	public Iterable<User> getLikes(long id)
-//	{
-//		Optional<Video> optVideo =  repo.findById(id);
-//	
-//		if (optVideo.isEmpty()) 
-//		{
-//			return null;
-//		}
-//		return optVideo.get().getLikes();
-//	}
-//	
-//	@Get("/{id}/dislikes")
-//	public Iterable<User> getDislikes(long id)
-//	{
-//		Optional<Video> optVideo =  repo.findById(id);
-//	
-//		if (optVideo.isEmpty()) 
-//		{
-//			return null;
-//		}
-//		return optVideo.get().getDislikes();
-//	}
+	@Get("/{id}/likes")
+	public Iterable<User> getLikes(long id)
+	{
+		Optional<Video> optVideo =  repo.findById(id);
+	
+		if (optVideo.isEmpty()) 
+		{
+			return null;
+		}
+		return optVideo.get().getLikes();
+	}
+	
+	@Get("/{id}/dislikes")
+	public Iterable<User> getDislikes(long id)
+	{
+		Optional<Video> optVideo =  repo.findById(id);
+	
+		if (optVideo.isEmpty()) 
+		{
+			return null;
+		}
+		return optVideo.get().getDislikes();
+	}
 	
 	@Transactional
 	@Put("/{videoId}/viewers/{userId}")
@@ -151,6 +151,58 @@ public class VideosController {
 		Video video = oVideo.get();
 		User user = oUser.get();
 		video.getViewers().add(user);
+		repo.update(video);
+		
+		return HttpResponse.ok();
+	}
+	
+	@Transactional
+	@Put("/{videoId}/likes/{userId}")
+	public HttpResponse<Void> addLike(long videoId, long userId)
+	{
+		Optional<Video> oVideo = repo.findById(videoId);
+		
+		if (oVideo.isEmpty()) 
+		{
+			return HttpResponse.notFound();
+		}
+		
+		Optional<User> oUser = userRepo.findById(userId);
+		
+		if (oUser.isEmpty()) 
+		{
+			return HttpResponse.notFound();
+		}
+		
+		Video video = oVideo.get();
+		User user = oUser.get();
+		video.getLikes().add(user);
+		repo.update(video);
+		
+		return HttpResponse.ok();
+	}
+	
+	@Transactional
+	@Put("/{videoId}/dislikes/{userId}")
+	public HttpResponse<Void> addDislike(long videoId, long userId)
+	{
+		Optional<Video> oVideo = repo.findById(videoId);
+		
+		if (oVideo.isEmpty()) 
+		{
+			return HttpResponse.notFound();
+		}
+		
+		Optional<User> oUser = userRepo.findById(userId);
+		
+		if (oUser.isEmpty()) 
+		{
+			return HttpResponse.notFound();
+		}
+		
+		Video video = oVideo.get();
+		User user = oUser.get();
+		video.getDislikes().add(user);
 		repo.update(video);
 		
 		return HttpResponse.ok();

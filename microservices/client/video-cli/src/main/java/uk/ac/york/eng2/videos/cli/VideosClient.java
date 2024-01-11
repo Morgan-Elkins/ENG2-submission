@@ -37,4 +37,16 @@ public interface VideosClient {
 	
 	@Delete("/{videoId}/viewers/{userId}")
 	public HttpResponse<Void> deleteViewer(long videoId, long userId);
+	
+	@Get("/{id}/likes")
+	public Iterable<User> getLikes(long id);
+	
+	@Get("/{id}/dislikes")
+	public Iterable<User> getDislikes(long id);
+	
+	@Put("/{videoId}/likes/{userId}")
+	public HttpResponse<Void> addLike(long videoId, long userId);
+	
+	@Put("/{videoId}/dislikes/{userId}")
+	public HttpResponse<Void> addDislike(long videoId, long userId);
 }

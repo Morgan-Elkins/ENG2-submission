@@ -4,14 +4,13 @@ import io.micronaut.http.HttpResponse;
 import jakarta.inject.Inject;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Parameters;
-import uk.ac.york.eng2.videos.domain.Video;
 import uk.ac.york.eng2.videos.dto.VideoDTO;
 
 @Command(name = "add-video", description = "Adds a video to the database", mixinStandardHelpOptions = true)
 public class AddVideoCommand implements Runnable {
 
 	@Inject
-	VideosClient client;
+	private VideosClient client;
 	
 	@Parameters(index="0")
 	private String title;

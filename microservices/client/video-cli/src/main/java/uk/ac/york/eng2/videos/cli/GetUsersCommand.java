@@ -8,7 +8,7 @@ import uk.ac.york.eng2.videos.domain.User;
 public class GetUsersCommand implements Runnable {
 
 	@Inject
-	UsersClient client;
+	private UsersClient client;
 
 	@Override
 	public void run() {

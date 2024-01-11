@@ -9,7 +9,7 @@ import uk.ac.york.eng2.videos.domain.Video;
 public class GetVideoCommand implements Runnable {
 
 	@Inject
-	VideosClient client;
+	private VideosClient client;
 	
 	@Parameters(index="0")
 	private Long id;

@@ -5,8 +5,8 @@ import picocli.CommandLine.Command;
 import picocli.CommandLine.Parameters;
 import uk.ac.york.eng2.videos.domain.User;
 
-@Command(name = "get-viewers", description = "fetches the viewers of a specific video", mixinStandardHelpOptions = true)
-public class GetViewersCommand implements Runnable {
+@Command(name = "get-liked-videos", description = "fetches the likes of a specific video", mixinStandardHelpOptions = true)
+public class GetLikedVideosCommand implements Runnable {
 
 	@Inject
 	private VideosClient client;
@@ -16,8 +16,8 @@ public class GetViewersCommand implements Runnable {
 
 	@Override
 	public void run() {
-		Iterable<User> viewers = client.getViewers(id);
-		for (User u : viewers) 
+		Iterable<User> likes = client.getLikes(id);
+		for (User u : likes) 
 		{
 			System.out.println(u);
 		}

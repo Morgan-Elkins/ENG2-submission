@@ -5,7 +5,6 @@ import jakarta.inject.Inject;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Parameters;
 import uk.ac.york.eng2.videos.dto.UserDTO;
-import uk.ac.york.eng2.videos.dto.VideoDTO;
 
 @Command(name = "add-user", description = "Adds a user to the database", mixinStandardHelpOptions = true)
 public class AddUserCommand implements Runnable {
