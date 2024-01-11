@@ -16,6 +16,7 @@ import jakarta.inject.Inject;
 import uk.ac.york.eng2.videos.domain.User;
 import uk.ac.york.eng2.videos.domain.Video;
 import uk.ac.york.eng2.videos.dto.VideoDTO;
+import uk.ac.york.eng2.videos.events.VideosProducer;
 import uk.ac.york.eng2.videos.repositories.UsersRepository;
 import uk.ac.york.eng2.videos.repositories.VideosRepository;
 
@@ -27,6 +28,9 @@ public class VideosController {
 	
 	@Inject
 	UsersRepository userRepo;
+	
+	@Inject
+	VideosProducer videoProducer;
 
 	@Get("/")
 	public Iterable<Video> list() {
@@ -150,8 +154,11 @@ public class VideosController {
 		
 		Video video = oVideo.get();
 		User user = oUser.get();
-		video.getViewers().add(user);
-		repo.update(video);
+		if ( video.getViewers().add(user)) 
+		{
+			repo.update(video);
+			videoProducer.watchedVideo(videoId, video);
+		}
 		
 		return HttpResponse.ok();
 	}

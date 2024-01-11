@@ -43,4 +43,3 @@ micronaut {
         annotations("uk.ac.york.eng2.videos.*")
     }
 }
-
