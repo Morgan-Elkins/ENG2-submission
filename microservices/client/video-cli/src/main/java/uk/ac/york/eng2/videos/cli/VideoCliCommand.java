@@ -19,7 +19,9 @@ subcommands = {
 		GetDislikedVideosCommand.class,
 		GetLikedVideosCommand.class,
 		AddLikeCommand.class,
-		AddDislikeCommand.class}, 
+		AddDislikeCommand.class,
+		GetVideosByUserCommand.class,
+		GetVideosByHashtagCommand.class}, 
 mixinStandardHelpOptions = true) 
 public class VideoCliCommand implements Runnable {
 
