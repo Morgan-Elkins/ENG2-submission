@@ -16,7 +16,11 @@ import jakarta.inject.Inject;
 import uk.ac.york.eng2.videos.domain.User;
 import uk.ac.york.eng2.videos.domain.Video;
 import uk.ac.york.eng2.videos.dto.VideoDTO;
+import uk.ac.york.eng2.videos.events.DislikesProducer;
+import uk.ac.york.eng2.videos.events.LikesProducer;
+import uk.ac.york.eng2.videos.events.PostedVideoProducer;
 import uk.ac.york.eng2.videos.events.VideosProducer;
+import uk.ac.york.eng2.videos.events.ViewedByUserProducer;
 import uk.ac.york.eng2.videos.repositories.UsersRepository;
 import uk.ac.york.eng2.videos.repositories.VideosRepository;
 
@@ -31,6 +35,19 @@ public class VideosController {
 	
 	@Inject
 	VideosProducer videoProducer;
+	
+	@Inject
+	LikesProducer likesProducer;
+	
+	@Inject
+	DislikesProducer dislikesProducer;
+	
+	@Inject
+	ViewedByUserProducer viewedByUserProducer;
+	
+	@Inject
+	PostedVideoProducer postedVideoProducer;
+	
 
 	@Get("/")
 	public Iterable<Video> list() {
@@ -46,6 +63,8 @@ public class VideosController {
 		video.setHashtags(videoDetails.getHashtags());
 
 		repo.save(video);
+		
+		postedVideoProducer.videoPosted(video.getId(), video);
 		
 		return HttpResponse.created(URI.create("/videos/" + video.getId()));
 	}
@@ -154,10 +173,11 @@ public class VideosController {
 		
 		Video video = oVideo.get();
 		User user = oUser.get();
-		if ( video.getViewers().add(user)) 
+		if (video.getViewers().add(user)) 
 		{
 			repo.update(video);
 			videoProducer.watchedVideo(videoId, video);
+			viewedByUserProducer.viewedByUser(videoId, userId, video);
 		}
 		
 		return HttpResponse.ok();
@@ -183,8 +203,12 @@ public class VideosController {
 		
 		Video video = oVideo.get();
 		User user = oUser.get();
-		video.getLikes().add(user);
-		repo.update(video);
+		if (video.getLikes().add(user)) 
+		{
+			repo.update(video);
+			likesProducer.likedVideo(videoId, video);
+		}
+		
 		
 		return HttpResponse.ok();
 	}
@@ -209,9 +233,10 @@ public class VideosController {
 		
 		Video video = oVideo.get();
 		User user = oUser.get();
-		video.getDislikes().add(user);
-		repo.update(video);
-		
+		if (video.getDislikes().add(user)) {
+			repo.update(video);
+			dislikesProducer.dislikedVideo(videoId, video);
+		}
 		return HttpResponse.ok();
 	}
 	

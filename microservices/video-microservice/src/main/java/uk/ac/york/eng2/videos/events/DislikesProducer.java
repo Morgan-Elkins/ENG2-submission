@@ -6,10 +6,10 @@ import io.micronaut.configuration.kafka.annotation.Topic;
 import uk.ac.york.eng2.videos.domain.Video;
 
 @KafkaClient
-public interface VideosProducer {
+public interface DislikesProducer {
 	
-	String VIDEO_VIEWED_TOPIC = "video-viewed";
+	String VIDEO_DISLIKED_TOPIC = "video-disliked";
 	
-	@Topic(VIDEO_VIEWED_TOPIC)
-	void watchedVideo(@KafkaKey Long id, Video v);
+	@Topic(VIDEO_DISLIKED_TOPIC)
+	void dislikedVideo(@KafkaKey Long id, Video v);
 }

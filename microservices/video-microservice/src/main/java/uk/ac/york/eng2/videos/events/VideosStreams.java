@@ -26,7 +26,7 @@ import uk.ac.york.eng2.videos.domain.Video;
 @Factory
 public class VideosStreams {
 	
-	public String TOPIC_READ_BY_DAY = "video_read_by_day";
+	public String TOPIC_READ_BY_DAY = "video_viewed_by_day";
 	
 	@Inject
 	private SerdeRegistry serdeRegistry;
