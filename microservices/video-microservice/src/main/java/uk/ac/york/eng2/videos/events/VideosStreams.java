@@ -26,7 +26,7 @@ import uk.ac.york.eng2.videos.domain.Video;
 @Factory
 public class VideosStreams {
 	
-	public String TOPIC_READ_BY_DAY = "video_viewed_by_day";
+	public static final String TOPIC_VIEWED_BY_DAY = "video_viewed_by_day";
 	
 	@Inject
 	private SerdeRegistry serdeRegistry;
@@ -58,7 +58,7 @@ public class VideosStreams {
 				(key,value) -> new WindowedIdentifier(key.key(), key.window().start(), key.window().end())
 		);
 		
-		jsonCountStream.to(TOPIC_READ_BY_DAY, Produced.with(serdeRegistry.getSerde(WindowedIdentifier.class), Serdes.Long()));
+		jsonCountStream.to(TOPIC_VIEWED_BY_DAY, Produced.with(serdeRegistry.getSerde(WindowedIdentifier.class), Serdes.Long()));
 		
 		return jsonCountStream;
 	}

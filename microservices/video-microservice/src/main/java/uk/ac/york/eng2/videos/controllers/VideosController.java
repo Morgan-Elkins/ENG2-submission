@@ -177,7 +177,7 @@ public class VideosController {
 		{
 			repo.update(video);
 			videoProducer.watchedVideo(videoId, video);
-			viewedByUserProducer.viewedByUser(videoId, userId, video);
+			//viewedByUserProducer.viewedByUser(videoId, userId, video);
 		}
 		
 		return HttpResponse.ok();
