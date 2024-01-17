@@ -3,7 +3,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -68,6 +70,26 @@ public class VideosControllerTest {
 	}
 	
 	@Test
+	public void addVideo() {
+		final String videoTitle = "Video1";
+		final String videoUser = "User1";
+		final String videoHashtag = "Hashtag1";
+
+		VideoDTO video = new VideoDTO();
+		video.setTitle(videoTitle);
+		video.setUser(videoUser);
+		video.setHashtags(videoHashtag);
+		HttpResponse<Void> response = client.add(video);
+		assertEquals(HttpStatus.CREATED, response.getStatus(), "Update should be successful");
+
+		List<Video> videos = iterableToList(client.list());
+		assertEquals(1, videos.size());
+		assertEquals(videoTitle, videos.get(0).getTitle());
+		assertEquals(videoUser, videos.get(0).getUser());
+		assertEquals(videoHashtag, videos.get(0).getHashtags());
+	}
+
+	@Test
 	public void updateVideo() {
 		Video v = new Video();
 		v.setTitle("Video1");
@@ -108,5 +130,11 @@ public class VideosControllerTest {
 		v = repo.findById(videoId).get();
 		assertEquals(1, v.getViewers().size(), "Video should now have 1 viewer");
 		assertEquals(readerUsername, v.getViewers().iterator().next().getUsername());
+	}
+	
+	private <T> List<T> iterableToList(Iterable<T> iterable) {
+		List<T> l = new ArrayList<>();
+		iterable.forEach(l::add);
+		return l;
 	}
 }
