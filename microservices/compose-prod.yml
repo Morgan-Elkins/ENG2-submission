@@ -4,6 +4,8 @@
 # The Compose file can assume that the appropriate commands have already
 # been run to build the Docker images of the various microservices.
 # Run: docker compose -p video-microservice-prod -f compose-prod.yml up -d
+# docker compose -p microservices-prod -f compose-prod.yml up -d
+
 
 services:
   db:
@@ -16,13 +18,25 @@ services:
       MARIADB_DATABASE: &dbname videos
     volumes:
       - mariadb_data:/var/lib/mysql
-#      - ./sql:/docker-entrypoint-initdb.d
+      - ./sql:/docker-entrypoint-initdb.d
 
   video:
     image: video-microservice:latest
     restart: unless-stopped
     ports:
       - 8080:8080
+    environment:
+      DB_HOST: db
+      DB_USER: *dbuser
+      DB_PASSWORD: *dbpass
+      DB_NAME: *dbname
+      KAFKA_BOOTSTRAP_SERVERS: kafka-0:9092,kafka-1:9092,kafka-2:9092
+
+  trending:
+    image: trending-microservice:latest
+    restart: unless-stopped
+    ports:
+      - 8081:8081
     environment:
       DB_HOST: db
       DB_USER: *dbuser

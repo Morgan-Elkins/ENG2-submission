@@ -1,4 +1,4 @@
-package uk.ac.york.eng2.videos.events;
+package uk.ac.york.eng2.trending.events;
 
 import java.time.Duration;
 import java.util.Properties;
@@ -16,16 +16,18 @@ import io.micronaut.configuration.kafka.streams.ConfiguredStreamBuilder;
 import io.micronaut.context.annotation.Factory;
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
-import uk.ac.york.eng2.videos.domain.Video;
-// This whole class is just so I can compile this microservice as is, probably should remove
+import uk.ac.york.eng2.trending.domain.Video;
+
 @Factory
 public class VideosStreams {
-	
-	public static final String TOPIC_VIEWED_BY_DAY = "video_viewed_by_day";
+public static final String TOPIC_POSTED_BY_HOUR = "video_posted_by_hour";
+public static final String VIDEO_POSTED_TOPIC = "video_posted";
 	
 	@Inject
 	private SerdeRegistry serdeRegistry;
 	
+	
+	// This will get all of the videos posted in the last hour
 	@Singleton
 	public KStream<WindowedIdentifier, Long> videosWatchedByDay(ConfiguredStreamBuilder builder)
 	{
@@ -35,17 +37,18 @@ public class VideosStreams {
 		props.put(StreamsConfig.PROCESSING_GUARANTEE_CONFIG, StreamsConfig.EXACTLY_ONCE);
 
 		KStream<Long, Video> videosStream = builder
-			.stream(VideosProducer.VIDEO_VIEWED_TOPIC, Consumed.with(Serdes.Long(), serdeRegistry.getSerde(Video.class)));
+			.stream(VIDEO_POSTED_TOPIC, Consumed.with(Serdes.Long(), serdeRegistry.getSerde(Video.class)));
 
 		KStream<WindowedIdentifier, Long> stream = videosStream.groupByKey()
-			.windowedBy(TimeWindows.of(Duration.ofDays(1)).advanceBy(Duration.ofDays(1)))
+			.windowedBy(TimeWindows.of(Duration.ofHours(1)).advanceBy(Duration.ofHours(1)))
 			.count(Materialized.as("viewed-by-day"))
 			.toStream()
 			.selectKey((k, v) -> new WindowedIdentifier(k.key(), k.window().start(), k.window().end()));
 
-		stream.to(TOPIC_VIEWED_BY_DAY,
+		stream.to(TOPIC_POSTED_BY_HOUR,
 			Produced.with(serdeRegistry.getSerde(WindowedIdentifier.class), Serdes.Long()));
 
 		return stream;
-	}	
+	}
+	
 }
