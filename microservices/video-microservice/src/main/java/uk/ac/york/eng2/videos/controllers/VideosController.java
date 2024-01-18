@@ -20,7 +20,6 @@ import uk.ac.york.eng2.videos.events.DislikesProducer;
 import uk.ac.york.eng2.videos.events.LikesProducer;
 import uk.ac.york.eng2.videos.events.PostedVideoProducer;
 import uk.ac.york.eng2.videos.events.VideosProducer;
-import uk.ac.york.eng2.videos.events.ViewedByUserProducer;
 import uk.ac.york.eng2.videos.repositories.UsersRepository;
 import uk.ac.york.eng2.videos.repositories.VideosRepository;
 
@@ -41,9 +40,6 @@ public class VideosController {
 	
 	@Inject
 	DislikesProducer dislikesProducer;
-	
-	@Inject
-	ViewedByUserProducer viewedByUserProducer;
 	
 	@Inject
 	PostedVideoProducer postedVideoProducer;
@@ -177,7 +173,6 @@ public class VideosController {
 		{
 			repo.update(video);
 			videoProducer.watchedVideo(videoId, video);
-			viewedByUserProducer.viewedByUser(videoId, userId, video);
 		}
 		
 		return HttpResponse.ok();

@@ -47,10 +47,10 @@ public class TestDoubleStreamsTest {
 					VideosProducer.VIDEO_VIEWED_TOPIC,
 				new LongSerializer(), serdeRegistry.getSerializer(Video.class));
 
-			final long bookId = 1L;
+			final long videoId = 1L;
 			final int eventCount = 2;
 			for (int i = 0; i < eventCount; i++) {
-				inputTopic.pipeInput(bookId, new Video());
+				inputTopic.pipeInput(videoId, new Video());
 			}
 
 			TestOutputTopic<WindowedIdentifier, Long> outputTopic = testDriver.createOutputTopic(
@@ -62,7 +62,7 @@ public class TestDoubleStreamsTest {
 			assertFalse(keyValues.isEmpty());
 
 			KeyValue<WindowedIdentifier, Long> lastKeyValue = keyValues.get(keyValues.size() - 1);
-			assertEquals(bookId, lastKeyValue.key.getId());
+			assertEquals(videoId, lastKeyValue.key.getId());
 			assertEquals(eventCount, lastKeyValue.value);
 		}
 	}

@@ -1,10 +1,11 @@
 micronaut:
   application:
     name: videoMicroservice
-
+  server:
+    port: 8080
 datasources:
   default:
-    url: jdbc:mariadb://${DB_HOST:`localhost:8080`}/${DB_NAME:videos}
+    url: jdbc:mariadb://${DB_HOST:`localhost:3306`}/${DB_NAME:videos}
     username: ${DB_USER:todo}
     password: ${DB_PASSWORD:todosecret}
     driver-class-name: org.mariadb.jdbc.Driver
