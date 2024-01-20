@@ -1,65 +1,96 @@
-# 2023/24 ENG2 submission template
+# Micronaut microservices + clients
+ - Video microservice
+ - Trending hashtags microservice
+ - Subscription Microservice
 
-This is a template repository with a recommended structure for your submission to the assessment of the ENG2 module, in its 2023/24 edition.
+This project contains an the code for the three microservices and the modeling required for the assessment.
+This repo was made using the template provided.
 
-The repository is structured according to your assessment specification, and it is largely divided into:
 
-* A report in PDF format: `Y1234.pdf`, where `Y1234` is your examination number.
-* A folder called `microservices` with the implementations of your microservices and command-line clients.
-* A folder called `modeling` with your Eclipse-based modelling language and models.
+## Endpoints
 
-See the subsections below and the rest of the `README.md` files in this repository for more details.
+Each microservice has RESTful endpoints for both lists and items.  
+For a list of the endpoints for video, consult the [`VideosClient`](microservices\client\video-cli\src\main\java\uk\ac\york\eng2\videos\cli/VideosClient.java) and [`UsersClient`](microservices\client\video-cli\src\main\java\uk\ac\york\eng2\videos\cli/UsersClient.java) declarative HTTP client.  
+For a list of the endpoints for trending, consult the [`TrendingClient`](microservices\client\trending-cli\src\main\java\uk\ac\york\eng2\cli/TrendingClient.java) declarative HTTP client.
 
-Remember that you must not identify yourself anywhere in your submission!
+## Development/Running separately deployable with Eclipse
 
-## Report (in PDF format)
+To work on this project from Eclipse 4.9 and onwards, make sure you have [Eclipse Buildship](https://www.vogella.com/tutorials/EclipseGradle/article.html) installed, and that you are using [Java 11](https://adoptium.net/) or later.
 
-While the repository includes a source `.docx` file as an example, you can produce the PDF with any software you like.
+Clone the project, and run this command to generate the relevant Eclipse-specific projects:
 
-## Microservices
+```sh
+cd /microservices
+./eclipse.sh
+```
 
-You may develop these microservices using Eclipse (as taught in the module), or using another IDE of your choosing.
+Use Eclipse to import the projects, selecting `File - Import... - Gradle - Existing Gradle Project`.
+Import `video-cli`, `trending-cli` ,`video-microservice`, `trending-microservice` separately: the order does not matter.
 
-Regardless of the IDE you used, we expect you to provide the full Gradle projects, so we can build them by running the Gradle `build` task.
-Please include the instructions for how to build your microservices and their Docker images in your report.
+### Starting the docker container
+```sh
+cd /microservices
+docker compose up -d
+```
 
-The simplest option is to have one Gradle project per microservice/client.
-Alternatively, you could look into [Gradle multi-project builds](https://docs.gradle.org/current/userguide/multi_project_builds.html) if you'd like to reuse code across projects.
+#### For video-microservice, other microservices same but with name replaced 
+To run the microservice, use the `Gradle Tasks` view to start the `run` task of the `video-microservice` project.
 
-Note that if you are an ENG2-M student, you will also need to include the hashtag recommendation microservice.
+To run the CLI tool, the most convenient option for development is to use the `run` task as well, but from a console:
 
-## Modeling language and models
+```sh
+cd /microservices/client/video-cli
+./gradlew run --args='--help'
+```
 
-You will need Eclipse to do this part. For 2023/24, the easiest approach is to install Eclipse with Epsilon 2.4 as mentioned [in this page](https://eclipse.dev/epsilon/download/).
+to add a video (for example) use 
+```sh
+./gradlew run --args='add-video Vid1 User1 Hashtag1,Hashtag2'
+```
+the use this command to get the videos
+```sh
+./gradlew run --args='get-videos'
+```
 
-For modeling, we suggest developing your metamodel in your main Eclipse instance, and doing the rest of the tasks in a nested Eclipse instance.
+## Integration testing with Docker Compose
 
-Your main Eclipse instance would include the metamodel project and its generated `.edit` and `.editor` projects:
+To run the microservice running on its own Docker image, run these commands from the microservices folder:
 
-![Main instance with metamodel and .edit/.editor projects](images/modeling-main-eclipse.png)
+```sh
+cd /video-microservice
+./gradlew dockerBuild
+cd ..
+cd /trending-microservice
+./gradlew dockerBuild
+cd ..
+cd /trending-microservice
+./gradlew dockerBuild
+cd ..
+docker compose -p microservices-prod -f compose-prod.yml up -d
+```
 
-The nested Eclipse instance that you launch from the main instance would include the rest of the modeling projects:
+This will build a Java-based Docker image of the microservice, and then start it together with its dependencies.
 
-![Nested instance with the rest of the modeling projects](images/modeling-nested-eclipse.png)
+This can then be used the test the system as a whole and see (for example) if when videos are posted with hashtags, they appear in the trending microservice.
 
-You should rename the projects and their folders, changing `y1234` to your examination number.
-To do this:
+## Viewing and editing the C4 model
 
-1. Switch to the Java perspective from the Window menu, selecting "Perspective" and then "Other...", and choosing "Java".
-1. Do this on each project from the "Package Explorer" view:
-   1. Right-click on it, and select "Refactor - Rename..." to rename the project.
-   1. Right-click on it again, and select "Refactor - Move..." to rename its folder so it matches the new project name.
+The above C4 model was created using the textual [Structurizr DSL](https://docs.structurizr.com/dsl/).
 
-In addition, for the projects based on your metamodel, since you will need to rename the `.emf` file and change its contents, you should delete and regenerate the `src` folders and `.ecore` and `.genmodel` files.
+The Compose file includes a container that runs the [Structurizr Lite](https://structurizr.com/help/lite) Docker image, which will automatically visualise the contents of the [`structurizr/workspace.dsl`](structurizr/workspace.dsl) file.
+After running the compose script (not prod), Structurizr Lite is available from this URL:
 
-Putting everything together, we recommend doing this to get started:
+http://localhost:8081/
 
-1. Open Eclipse.
-1. Import the metamodel, `.edit` and `.editor` projects.
-1. Rename the projects and their folders to suit your examination number.
-1. Delete the `src` folders from these three projects, as well as the `.ecore` and `.genmodel` file.
-1. Rename the `Y1234.emf` file to suit your examination number, and populate it with your metamodel.
-1. Regenerate the `.ecore` and `.genmodel` files, as well as the source code of the tree-based editors.
-1. Run a nested Eclipse instance from the metamodel project.
-1. Import the rest of the modeling projects in the nested Eclipse instance.
-1. Rename the imported projects and their folders to suit your examination number.
+To experiment with the Structurizr DSL, edit the `workspace.dsl` with your preferred text editor, and reload the page.
+
+## C4 container models
+
+The system can be described through the following [C4 container model](https://c4model.com/):
+
+## Video Microservice
+![C4 container model](microservices/structurizr/diagrams/structurizr-1-Component-001.png)
+## Trending Microservice
+![C4 container model](microservices/structurizr/diagrams/structurizr-1-Component-002.png)
+## Subscription Microservice
+![C4 container model](microservices/structurizr/diagrams/structurizr-1-Component-003.png)
