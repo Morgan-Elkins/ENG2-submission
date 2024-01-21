@@ -5,7 +5,7 @@ import picocli.CommandLine.Command;
 import picocli.CommandLine.Parameters;
 import uk.ac.york.eng2.videos.domain.User;
 
-@Command(name = "get-liked-videos", description = "fetches the likes of a specific video", mixinStandardHelpOptions = true)
+@Command(name = "get-likes-of-video", description = "fetches the likes of a specific video", mixinStandardHelpOptions = true)
 public class GetLikedVideosCommand implements Runnable {
 
 	@Inject

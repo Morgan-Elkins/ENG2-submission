@@ -5,7 +5,7 @@ import picocli.CommandLine.Command;
 import picocli.CommandLine.Parameters;
 import uk.ac.york.eng2.videos.domain.User;
 
-@Command(name = "get-disliked-videos", description = "fetches the dislikes of a specific video", mixinStandardHelpOptions = true)
+@Command(name = "get-dislikes-of-video", description = "fetches the dislikes of a specific video", mixinStandardHelpOptions = true)
 public class GetDislikedVideosCommand implements Runnable {
 
 	@Inject
