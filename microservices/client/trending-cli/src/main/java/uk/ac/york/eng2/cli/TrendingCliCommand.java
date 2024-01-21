@@ -8,6 +8,7 @@ import picocli.CommandLine.Option;
 	subcommands= {
 			GetAllHashtagsCommand.class,
 			AddHashtagsCommand.class,
+			GetTopTenHashtagsCommand.class,
 	},
         mixinStandardHelpOptions = true)
 public class TrendingCliCommand implements Runnable {

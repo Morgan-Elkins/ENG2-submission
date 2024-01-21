@@ -52,9 +52,23 @@ the use this command to get the videos
 ./gradlew run --args='get-videos'
 ```
 
+Then to get the top 10 hashtags use in the trending microservice
+```sh
+cd ..
+cd /trending-cli
+./gradlew run --args='get-top-ten-hashtags'
+```
+
 ## Integration testing with Docker Compose
 
-To run the microservice running on its own Docker image, run these commands from the microservices folder:
+To run the microservice running on its own Docker image, run 
+
+```sh
+cd microservices/
+./buildDocker.sh
+```
+
+or run these commands from the microservices folder:
 
 ```sh
 cd /video-microservice
@@ -78,7 +92,7 @@ This can then be used the test the system as a whole and see (for example) if wh
 The above C4 model was created using the textual [Structurizr DSL](https://docs.structurizr.com/dsl/).
 
 The Compose file includes a container that runs the [Structurizr Lite](https://structurizr.com/help/lite) Docker image, which will automatically visualise the contents of the [`structurizr/workspace.dsl`](structurizr/workspace.dsl) file.
-After running the compose script (not prod), Structurizr Lite is available from this URL:
+After running docker compose up -d, Structurizr Lite is available from this URL:
 
 http://localhost:8081/
 

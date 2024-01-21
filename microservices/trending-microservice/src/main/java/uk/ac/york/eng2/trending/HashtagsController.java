@@ -60,7 +60,6 @@ public class HashtagsController {
 		videosConsumer = new VideosConsumer();
 		List<Video> videos =  videosConsumer.getCurrentListOfVideos();
 		String allHashTags = "";
-		List<Hashtags> hashtagsList = new ArrayList<>();
 		
 		// Get all the hashtags
 		for (Video v: videos) 

@@ -15,3 +15,5 @@ out/
 .factorypath
 /.apt_generated/
 /.apt_generated_tests/
+!/gradle-wrapper.jar
+bin/

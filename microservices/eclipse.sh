@@ -1,9 +1,25 @@
 #!/bin/bash
 
-pushd todo-cli
+pushd video-microservice
 ./gradlew eclipse
 popd
 
-pushd todo-microservice
+pushd trending-microservice
+./gradlew eclipse
+popd
+
+pushd subscription-microservice
+./gradlew eclipse
+popd
+
+pushd client/video-cli
+./gradlew eclipse
+popd
+
+pushd client/trending-cli
+./gradlew eclipse
+popd
+
+pushd client/subscription-cli
 ./gradlew eclipse
 popd
