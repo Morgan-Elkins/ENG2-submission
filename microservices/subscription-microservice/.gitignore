@@ -14,3 +14,4 @@ out/
 .classpath
 .factorypath
 !gradle-wrapper.jar
+bin/

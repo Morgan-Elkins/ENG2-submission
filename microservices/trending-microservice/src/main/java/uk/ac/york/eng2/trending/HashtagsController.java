@@ -57,7 +57,6 @@ public class HashtagsController {
 	@Get("/top10")
     public String topTenHashtags() {
 		
-		videosConsumer = new VideosConsumer();
 		List<Video> videos =  videosConsumer.getCurrentListOfVideos();
 		String allHashTags = "";
 		
