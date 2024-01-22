@@ -1,8 +1,0 @@
-@namespace(uri="Y1234", prefix="mm")
-package Y1234;
-
-// This is just an example for the template - change as you like.
-
-class Model {
-	
-}

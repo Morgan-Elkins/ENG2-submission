@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="Y3890370" nsURI="Y3890370" nsPrefix="mm">
+  <eClassifiers xsi:type="ecore:EClass" name="Microservices">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="subscribes" upperBound="-1"
+        eType="#//Subscribes" containment="true">
+      <eAnnotations source="diagram">
+        <details key="direction" value="down"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="publishes" upperBound="-1"
+        eType="#//Publishes" containment="true">
+      <eAnnotations source="diagram">
+        <details key="direction" value="down"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="httpMethods" upperBound="-1"
+        eType="#//HttpMethods" containment="true">
+      <eAnnotations source="diagram">
+        <details key="direction" value="down"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Events">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="EventType" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
+      <eAnnotations source="diagram">
+        <details key="direction" value="down"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="EventStreams">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
+      <eAnnotations source="diagram">
+        <details key="direction" value="down"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="eventType" eType="#//Events"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Subscribes">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="eventStream" eType="#//EventStreams"
+        containment="true">
+      <eAnnotations source="diagram">
+        <details key="direction" value="down"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Publishes">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="eventStream" eType="#//EventStreams"
+        containment="true">
+      <eAnnotations source="diagram">
+        <details key="direction" value="down"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="HttpMethods">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="method" eType="#//HttpMethod"
+        containment="true">
+      <eAnnotations source="diagram">
+        <details key="direction" value="down"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="parameters" eType="#//RequestResponse"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="HttpMethod">
+    <eAnnotations source="diagram">
+      <details key="direction" value="down"/>
+    </eAnnotations>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="RequestResponse"/>
+</ecore:EPackage>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="ASCII"?>
+<mm:Microservices xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:mm="Y3890370" xmi:id="_LEmVALjnEe6aVJl91mncjA" name="Video-Microservice">
+  <subscribes xmi:id="_NIuv8LjnEe6aVJl91mncjA">
+    <eventStream xmi:id="_lqrCcLjsEe6aVJl91mncjA" name="?"/>
+  </subscribes>
+  <publishes xmi:id="_M1XvELjnEe6aVJl91mncjA">
+    <eventStream xmi:id="_l_bKcLjsEe6aVJl91mncjA" name="?"/>
+  </publishes>
+  <httpMethods xmi:id="_NYXucLjnEe6aVJl91mncjA">
+    <method xmi:id="_mRH-cLjsEe6aVJl91mncjA"/>
+    <parameters xmi:id="_mrrMcLjsEe6aVJl91mncjA"/>
+  </httpMethods>
+</mm:Microservices>

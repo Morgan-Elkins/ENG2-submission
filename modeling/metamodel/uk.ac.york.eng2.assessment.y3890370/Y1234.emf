@@ -1,0 +1,47 @@
+@namespace(uri="Y3890370", prefix="mm")
+package Y3890370;
+
+class Microservices {
+    attr String name;
+    @diagram(direction="down")
+    val Subscribes[*] subscribes;
+    @diagram(direction="down")
+    val Publishes[*] publishes;
+    @diagram(direction="down")
+    val HttpMethods[*] httpMethods;
+}
+
+class Events {
+@diagram(direction="down")
+    attr String EventType;
+}
+
+class EventStreams {
+@diagram(direction="down")
+    attr String name;
+    val Events eventType;
+}
+
+class Subscribes
+{
+@diagram(direction="down")
+    val EventStreams eventStream;
+}
+
+class Publishes
+{
+@diagram(direction="down")
+    val EventStreams eventStream;
+}
+
+class HttpMethods
+{
+@diagram(direction="down")
+    val HttpMethod method;
+    val RequestResponse parameters;
+}
+
+@diagram(direction="down")
+class HttpMethod{}
+
+class RequestResponse{}
